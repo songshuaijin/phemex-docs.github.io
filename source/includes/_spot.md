@@ -405,6 +405,48 @@ GET /api-data/spots/pnls
 ```
 GET /exchange/public/cfg/chain-settings?currency=<currency>
 ```
+
+> Response format 
+
+```json
+{
+  "code": 0,
+  "msg": "OK",
+  "data": {
+    "ETH": [
+      {
+        "currencyCode": 4,
+        "currencyName": "ETH",
+        "chainName": "ETH",
+        "chainTxUrl": "https://etherscan.io/tx/",
+        "chainId": 4,
+        "displayName": "ERC20",
+        "inUse": true
+      },
+      {
+        "currencyCode": 4,
+        "currencyName": "ETH",
+        "chainName": "BNB",
+        "chainTxUrl": "https://bscscan.com/tx/",
+        "chainId": 61,
+        "displayName": "BSC(BEP20)",
+        "inUse": true
+      },
+      {
+        "currencyCode": 4,
+        "currencyName": "ETH",
+        "chainName": "ARETH",
+        "chainTxUrl": "https://arbiscan.io/tx/",
+        "chainId": 261,
+        "displayName": "Arbitrum One",
+        "inUse": true
+      }
+    ]
+  }
+}
+```
+
+<!--
 ## Query deposit address by currency
 
 > Request format
@@ -428,6 +470,7 @@ GET /exchange/wallets/v2/depositAddress?currency=<currency>&chainName=<chainName
 |----------|--------|-----------|------------|-----------------|
 | currency | String | True      | the currency to query | BTC,ETH, USDT ... |
 | chainName| String | True      | the chain for this currency | BTC, ETH, EOS |
+
 
 ## Query recent deposit history
 
@@ -493,7 +536,7 @@ Response data is limited to 3 months.
 | Field    | Type   | Required  | Description| Possible Values |
 |----------|--------|-----------|------------|-----------------|
 | currency | String | True      | the currency to query | BTC,ETH, ... |
-
+-->
 ## Query funds history
 
 > Request format
@@ -762,6 +805,52 @@ GET /md/trade?symbol=sBTCUSDT
 }
 
 ```
+## Query 24 hours ticker for all symbols
+
+> Request format
+
+```
+GET /md/spot/ticker/24hr/all
+```
+
+> Response format
+
+```json
+{
+  "error": null,
+  "id": 0,
+  "result": [
+    {
+      "openEp": <open priceEp>,
+      "highEp": <high priceEp>,
+      "lowEp": <low priceEp>, 
+      "indexEp": <index priceEp>,
+      "lastEp": <last priceEp>,
+      "bidEp": <bid priceEp>,
+      "askEp": <ask priceEp>,
+      "symbol": "<symbol>",
+      "turnoverEv": <turnoverEv>,
+      "volumeEv": <volumeEv>,
+      "timestamp": <timestamp>
+    }
+  ]
+}
+```
+
+| Field         | Type    | Description                                | Possible Value                  |
+|---------------|---------|--------------------------------------------|---------------------------------|
+| open priceEp  | Integer | The scaled open price in last 24 hours     |                                 |
+| high priceEp  | Integer | The scaled highest price in last 24 hours  |                                 |
+| low priceEp   | Integer | The scaled lowest price in last 24 hours   |                                 |
+| index priceEp | Integer | The scaled index price in last 24 hours    |                                 |
+| last priceEp  | Integer | The scaled last price                      |                                 |
+| bid priceEp   | Integer | Scaled bid price                           |                                 |
+| ask priceEp   | Integer | Scaled ask price                           |                                 |
+| timestamp     | Integer | Timestamp in nanoseconds                   |                                 |
+| symbol        | String  | symbol name                                | [Trading symbols](#productinfo) |
+| turnoverEv    | Integer | The scaled turnover value in last 24 hours |                                 |
+| volumeEv      | Integer | The scaled trade volume in last 24 hours   |                                 |      |             |                |
+
 
 ## Query 24 hours ticker
 
@@ -773,7 +862,7 @@ GET /md/spot/ticker/24hr?symbol=<symbol>
 
 > Response format
 
-```javascript
+```json
 {
   "error": null,
   "id": 0,
@@ -792,18 +881,18 @@ GET /md/spot/ticker/24hr?symbol=<symbol>
 }
 ```
 
-| Field         | Type   | Description                                | Possible values |
-|---------------|--------|--------------------------------------------|--------------|
-| open priceEp  | Integer| The scaled open price in last 24 hours     |              |
-| high priceEp  | Integer| The scaled highest price in last 24 hours  |              |
-| low priceEp   | Integer| The scaled lowest price in last 24 hours   |              |
-| last priceEp  | Integer| The scaled last price                      |              |
-| bid priceEp   | Integer| Scaled bid price                           |              |
-| ask priceEp   | Integer| Scaled ask price                           |              |
-| timestamp     | Integer| Timestamp in nanoseconds                   |              |
-| symbol        | String | symbol name                                | [Trading symbols](#productinfo) |
-| turnoverEv    | Integer| The scaled turnover value in last 24 hours |              |
-| volumeEv      | Integer| The scaled trade volume in last 24 hours   |              |
+| Field        | Type     | Description                                | Possible values                 |
+|--------------|----------|--------------------------------------------|---------------------------------|
+| open priceEp | Integer  | The scaled open price in last 24 hours     |                                 |
+| high priceEp | Integer  | The scaled highest price in last 24 hours  |                                 |
+| low priceEp  | Integer  | The scaled lowest price in last 24 hours   |                                 |
+| last priceEp | Integer  | The scaled last price                      |                                 |
+| bid priceEp  | Integer  | Scaled bid price                           |                                 |
+| ask priceEp  | Integer  | Scaled ask price                           |                                 |
+| timestamp    | Integer  | Timestamp in nanoseconds                   |                                 |
+| symbol       | String   | symbol name                                | [Trading symbols](#productinfo) |
+| turnoverEv   | Integer  | The scaled turnover value in last 24 hours |                                 |
+| volumeEv     | Integer  | The scaled trade volume in last 24 hours   |                                 |
 
 > Request sample
 
